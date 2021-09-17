@@ -5,6 +5,7 @@ namespace ahmetbarut\Http\Validation;
 use ahmetbarut\Http\Input\InputInterface;
 use ahmetbarut\Http\Validation\Rules\Rule;
 use http\Exception\InvalidArgumentException;
+use ReflectionClass;
 
 class Validate
 {
@@ -19,11 +20,13 @@ class Validate
         "number" => \ahmetbarut\Http\Validation\Rules\Number::class,
     ];
 
-    private InputInterface $input;
+    private $input;
 
-    public function __construct(InputInterface $input, array $rules = [])
+    public function __construct($input, array $rules = [])
     {
         $this->isInstanceOfRules($rules);
+
+        $this->classes = array_merge($this->classes, $rules);
 
         $this->input = $input;
 
@@ -32,7 +35,7 @@ class Validate
 
     public function parse()
     {
-        foreach ($this->input->data as $key => $values) {
+        foreach ($this->input as $key => $values) {
             $this->parameters[$key] = $values;
         }
     }
@@ -56,6 +59,7 @@ class Validate
     public function make(): string|bool
     {
         foreach ($this->rules as $key => $rule) {
+            
             $getRuleClass = (new $this->classes[$rule]);
 
             if (false === $getRuleClass->check($key, $this->parameters[$key])) {
@@ -68,7 +72,8 @@ class Validate
     public function isInstanceOfRules (array $instance)
     {
         foreach ($instance as $key => $class) {
-            if (($class instanceof Rule) === false) {
+            $r = new ReflectionClass($class);
+            if ((new $class instanceof Rule) === false) {
                 throw new \InvalidArgumentException(sprintf("%s, not implemented ahmetbarut\Validation\Rules\Rule", $class));
             }
         }
