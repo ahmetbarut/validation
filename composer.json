@@ -1,0 +1,19 @@
+{
+    "name": "ahmetbarut/http",
+    "description": "HTTP istekleri ve yanıtları",
+    "type": "package",
+    "require": {
+        "symfony/var-dumper": "6.0.x-dev"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ahmetbarut\\Http\\": "src/"
+        }
+    },
+    "authors": [{
+        "name": "Ahmet Barut",
+        "email": "ahmetbarut588@gmail.com"
+    }],
+    "minimum-stability": "dev"
+}
