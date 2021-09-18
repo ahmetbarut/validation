@@ -4,16 +4,15 @@ namespace ahmetbarut\Validation\Validation\Rules;
 
 use ahmetbarut\Validation\Rules\Rule;
 
-class Required implements Rule
+class IsString implements Rule
 {
-
     public function check($attr, $value): bool
     {
-        return !empty($value);
+        return is_string($value);
     }
 
     public function message(): string
     {
-        return "Zorunlu alan!";
+        return "Sicim(String) kabul eder.";
     }
 }

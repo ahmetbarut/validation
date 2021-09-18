@@ -1,5 +1,4 @@
-vendor
 index.php
-*.lock
+composer.lock
 .idea
 .vscode

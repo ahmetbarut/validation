@@ -1,17 +1,19 @@
 <?php
 
-namespace ahmetbarut\Http\Validation\Rules;
+namespace ahmetbarut\Validation\Validation\Rules;
+
+use ahmetbarut\Validation\Rules\Rule;
 
 class Number implements Rule
 {
 
-    public function check($attr, $value): bool
+    public function check(string $attr, string $value): bool
     {
         return is_numeric($value);
     }
 
     public function message(): string
     {
-        return "Numara olmalıdır !";
+        return "Sayısal olmalıdır!";
     }
 }
