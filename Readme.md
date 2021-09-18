@@ -1,6 +1,24 @@
+- [Doğrulama Hakkında](#doğrulama-hakkında)
+- [Özellikleri](#özellikleri)
+- [Gereklilikler](#gereklilikler)
+- [Basit Kullaım](#basit-kullaım)
+- [Kurallar](#kurallar)
+- [Kurulum Ve Kural Tanımlama](#kurulum-ve-kural-tanımlama)
+  - [Kurulum](#kurulum)
+  - [Kural Tanımlama](#kural-tanımlama)
 # Doğrulama Hakkında
 Bu doğrulama paketi, size kolay bir şekilde formları doğrulamanıza olanak sağlar. Basit mantık üzerinde işleyişi yatıyor. Kuralı tanımla, kuralı nesneye tanıt ve kuralı kullan şeklindedir.
 
+`Illuminate\Validation` Laravel'den esinlenilmiştir. 
+
+# Özellikleri
+* Özel kurallar belirleme
+* Özel hata mesajları belirleme
+* Kullanım kolaylığı
+
+# Gereklilikler
+* composer 
+* php >= 7.4.23
 # Basit Kullaım
 Paketi kurmadan önce basit kullanımına bakalım:
 ```php
@@ -54,8 +72,11 @@ class Number implements Rule
     }
 }
 ```
-Bu sınıfı nesneye tanıtmak için nesneyi ilk oluşturduğumuzda verebiliriz. Bu arada nesneyi isteklerin ilk geldiği veya isteklerin geçtiği yerde oluşturmanız gerekli sonraki durumlarda böyle bir zorunluluk yok. Yani şöyle, eğer kural tanımlanacaksa belirttiğim şekilde olması gerekli. Sonraki durumda kuralların tutulduğu değişken `static` olduğu için nesneyi bir sonraki sefer ürettiğinizde yok olmaz. Önceki değerleri taşır.
+Bu sınıfı nesneye tanıtmak için nesneyi ilk oluşturduğumuzda verebiliriz. Bu arada nesneyi isteklerin ilk geldiği veya isteklerin geçtiği yerde oluşturmanız gerekli sonraki durumlarda böyle bir zorunluluk yok. Yani şöyle, eğer kural tanımlanacaksa belirttiğim şekilde olması gerekli. Sonraki durumda kuralların tutulduğu değişken `static` olduğu için nesneyi bir sonraki sefer ürettiğinizde yok olmaz önceki değerleri taşır.
 
+Kural tanımlamanın 1 kuralı vardır. 
+Dizi şeklinde verilmesi gerekir. Örn ["kural_adi" => Kural::class] kurala verilmek istenen isim ve sınıfın alan adı yani `namespace`.
+Kuralı tanımlayalım :
 ```php
 use ahmetbarut\Validation\Validate;
 use ahmetbarut\Validation\Validation\Rule;
@@ -76,13 +97,27 @@ class Number implements Rule
     }
 }
 
-$validation = new ahmetbarut\Validation\Validate();
+$validation = new ahmetbarut\Validation\Validate(["numara" => \Number::class]);
 
 $validation->setFields($_POST)->setRules(
     [
-        "id" => ["required", "number"],
+        "id" => ["required", "numara"],
         "name" => ["string", "required"],
         "date" => ["date", "required"],
     ]
 )->make();
+```
+Verilen form alanlarını nesne üzerinden almak istiyorsanız
+```php
+$validation = new ahmetbarut\Validation\Validate(["numara" => \Number::class]);
+
+$validation->setFields($_POST)->setRules(
+    [
+        "id" => ["required", "numara"],
+        "name" => ["string", "required"],
+        "date" => ["date", "required"],
+    ]
+)->make();
+
+$validation->getAllFields();
 ```

@@ -59,7 +59,7 @@ class Validate
      * @param array $rules kurallar 
      * @return static
      */
-    public function setRules(array $rules): static
+    public function setRules(array $rules)
     {
         foreach ($rules as $key => $value) {
             if (is_string($value)) {
@@ -79,7 +79,7 @@ class Validate
      * @param array $fields
      * @return static
      */
-    public function setFields(array $fields): static
+    public function setFields(array $fields)
     {
         $this->fields = $fields;
         $this->allFields = $fields;
@@ -95,6 +95,7 @@ class Validate
     {
         $fails = [];
         // Burda ilk önce kuralları döngüye koyuyoruz.
+
         foreach ($this->rules as $key => $rule) {
             // Burdaki 2. döngü ise, kurallar birden fazla olabilmesinden dolayı 2. döngüye ihtiyaç oluyor 
             // Burdaki döngü de ilgili alana ait kuralları dönecek.
@@ -105,10 +106,12 @@ class Validate
 
                 // Uygulanmış olan arayüzdeki check yöntemine erişip parametreleri çalıştırır ve sonucu alır
                 // Kural false dönerse başarısız olarak işaretlenir.
-                if ((array_key_exists($key, $this->fields)) && !$getRuleClass->check($key, $this->fields[$key])) {
-                    $fails[$key] = $getRuleClass->message();
-                } else {
-                    $fails[$key] = $getRuleClass->message();
+                if (!array_key_exists($key, $this->fields)) {
+                    if (in_array("required", $this->rules[$key])) {
+                        array_push_key($fails, $key, $getRuleClass->message());
+                    }
+                } else if ($getRuleClass->check($key, $this->fields[$key]) === false) {
+                    array_push_key($fails, $key, $getRuleClass->message());
                 }
             }
         }
@@ -139,7 +142,7 @@ class Validate
      *
      * @return array
      */
-    public function getAllFields(): array 
+    public function getAllFields(): array
     {
         return $this->allFields;
     }

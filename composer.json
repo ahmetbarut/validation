@@ -3,13 +3,17 @@
     "description": "Php form doğrulama",
     "type": "package",
     "require": {
-        "symfony/var-dumper": "6.0.x-dev"
+        "php": ">=7.4.23"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "ahmetbarut\\Validation\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helper/helpers.php"
+        ]
+
     },
     "authors": [{
         "name": "Ahmet Barut",

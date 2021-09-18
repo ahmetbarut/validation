@@ -9,7 +9,10 @@ class Number implements Rule
 
     public function check(string $attr, string $value): bool
     {
-        return is_numeric($value);
+        if (is_numeric($value) === true) {
+            return true;
+        }
+        return false;
     }
 
     public function message(): string

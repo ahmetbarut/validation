@@ -1,15 +1,18 @@
 <?php
 
-namespace ahmetbarut\Validation\Rules;
+namespace ahmetbarut\Validation\Validation\Rules;
 
 use ahmetbarut\Validation\Validation\Rule;
+use DateTime;
 
 class Date implements Rule
 {
     public function check($attr, $value): bool
     {
-        $value = explode('/', $value);
-        return checkdate($value[1], $value[0], $value[2]); 
+
+        return DateTime::createFromFormat("d/m/Y", $value) === false
+            ? false
+            : true;
     }
 
     public function message(): string
