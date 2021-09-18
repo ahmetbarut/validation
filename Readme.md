@@ -1,7 +1,7 @@
 - [Doğrulama Hakkında](#doğrulama-hakkında)
 - [Özellikleri](#özellikleri)
 - [Gereklilikler](#gereklilikler)
-- [Basit Kullaım](#basit-kullaım)
+- [Basit Kullanım](#basit-kullanım)
 - [Kurallar](#kurallar)
 - [Kurulum Ve Kural Tanımlama](#kurulum-ve-kural-tanımlama)
   - [Kurulum](#kurulum)
@@ -19,7 +19,7 @@ Bu doğrulama paketi, size kolay bir şekilde formları doğrulamanıza olanak s
 # Gereklilikler
 * composer 
 * php >= 7.4.23
-# Basit Kullaım
+# Basit Kullanım
 Paketi kurmadan önce basit kullanımına bakalım:
 ```php
 $validation = new ahmetbarut\Validation\Validate();
