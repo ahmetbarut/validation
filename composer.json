@@ -1,5 +1,5 @@
 {
-    "name": "ahmetbarut/http",
+    "name": "ahmetbarut/validation",
     "description": "Php form doğrulama",
     "type": "package",
     "require": {
