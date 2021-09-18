@@ -2,7 +2,7 @@
 
 namespace ahmetbarut\Validation;
 
-use ahmetbarut\Validation\Rules\Rule;
+use ahmetbarut\Validation\Validation\Rule;
 use ReflectionClass;
 
 /**
@@ -39,7 +39,7 @@ class Validate
      *
      * @var array
      */
-    protected static $ruleClass = [
+    public static $ruleClass = [
         "required" => \ahmetbarut\Validation\Validation\Rules\Required::class,
         "number" => \ahmetbarut\Validation\Validation\Rules\Number::class,
         "string" => \ahmetbarut\Validation\Validation\Rules\IsString::class,

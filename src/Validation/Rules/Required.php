@@ -2,7 +2,7 @@
 
 namespace ahmetbarut\Validation\Validation\Rules;
 
-use ahmetbarut\Validation\Rules\Rule;
+use ahmetbarut\Validation\Validation\Rule;
 
 class Required implements Rule
 {

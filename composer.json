@@ -1,6 +1,6 @@
 {
     "name": "ahmetbarut/http",
-    "description": "HTTP istekleri ve yanıtları",
+    "description": "Php form doğrulama",
     "type": "package",
     "require": {
         "symfony/var-dumper": "6.0.x-dev"
@@ -15,5 +15,5 @@
         "name": "Ahmet Barut",
         "email": "ahmetbarut588@gmail.com"
     }],
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

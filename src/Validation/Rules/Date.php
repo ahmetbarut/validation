@@ -1,8 +1,8 @@
 <?php
 
-namespace ahmetbarut\Validation\Validation\Rules;
+namespace ahmetbarut\Validation\Rules;
 
-use ahmetbarut\Validation\Rules\Rule;
+use ahmetbarut\Validation\Validation\Rule;
 
 class Date implements Rule
 {

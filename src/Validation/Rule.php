@@ -1,6 +1,6 @@
 <?php
 
-namespace ahmetbarut\Validation\Rules;
+namespace ahmetbarut\Validation\Validation;
 
 interface Rule
 {
