@@ -110,8 +110,10 @@ class Validate
                     if (in_array("required", $this->rules[$key])) {
                         array_push_key($fails, $key, $getRuleClass->message());
                     }
-                } else if ($getRuleClass->check($key, $this->fields[$key]) === false) {
-                    array_push_key($fails, $key, $getRuleClass->message());
+                } else if (!in_array("required", $this->rules[$key]) && !empty($this->fields[$key])) {
+                    if ($getRuleClass->check($key, $this->fields[$key]) === false) {
+                        array_push_key($fails, $key, $getRuleClass->message());
+                    }
                 }
             }
         }
