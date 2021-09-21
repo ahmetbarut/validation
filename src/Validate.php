@@ -97,30 +97,37 @@ class Validate
         // Burda ilk önce kuralları döngüye koyuyoruz.
 
         foreach ($this->rules as $key => $rule) {
+
             // Burdaki 2. döngü ise, kurallar birden fazla olabilmesinden dolayı 2. döngüye ihtiyaç oluyor 
             // Burdaki döngü de ilgili alana ait kuralları dönecek.
             for ($counter = 0; $counter < count($rule); $counter++) {
 
-                // Kural sınıfını çağırır.
-                $getRuleClass = (new static::$ruleClass[$rule[$counter]]);
+                if (is_object($rule[$counter])) {
+                    $getRuleClass = $rule[$counter];
+                } else {
+                    // Kural sınıfını çağırır.
+                    $getRuleClass = (new static::$ruleClass[$rule[$counter]]);
+                }
+                // $getRuleClass->check($rule[$counter])
+                if (!array_key_exists($key, $this->fields) && in_array("required", $rule)) {
+                    array_push_key($fails, $key, $getRuleClass->message());
+                }
 
-                // Uygulanmış olan arayüzdeki check yöntemine erişip parametreleri çalıştırır ve sonucu alır
-                // Kural false dönerse başarısız olarak işaretlenir.
+                if (array_key_exists($key, $this->fields) && in_array("required", $rule)) {
+                    if (false === $getRuleClass->check($key, $this->fields[$key])) {
+                        array_push_key($fails, $key, $getRuleClass->message());
+                    }
+                }
 
-                if (array_key_exists($key, $this->fields)) {
-                    if (in_array("required", $this->rules[$key])) {
-                        if (false === $getRuleClass->check($key, $this->fields[$key])) {
-                            array_push_key($fails, $key, $getRuleClass->message());
-                        }
-                    } else /* (!in_array("required", $this->rules[$key])) */ {
-                        if (false === $getRuleClass->check($key, $this->fields[$key])) {
-                            array_push_key($fails, $key, $getRuleClass->message());
-                        }
+                if (!in_array('required', $this->rules[$key]) && !empty($this->fields[$key])) {
+                    if (false === $getRuleClass->check($key, $this->fields[$key])) {
+                        array_push_key($fails, $key, $getRuleClass->message());
                     }
                 }
             }
         }
         if (!empty($fails)) {
+            http_response_code(422);
             return $fails;
         }
         return true;

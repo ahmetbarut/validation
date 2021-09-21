@@ -6,6 +6,7 @@
 - [Kurulum Ve Kural Tanımlama](#kurulum-ve-kural-tanımlama)
   - [Kurulum](#kurulum)
   - [Kural Tanımlama](#kural-tanımlama)
+- [Parametre Gönderme](#parametre-gönderme)
 # Doğrulama Hakkında
 Bu doğrulama paketi, size kolay bir şekilde formları doğrulamanıza olanak sağlar. Basit mantık üzerinde işleyişi yatıyor. Kuralı tanımla, kuralı nesneye tanıt ve kuralı kullan şeklindedir.
 
@@ -114,6 +115,22 @@ $validation = new ahmetbarut\Validation\Validate(["numara" => \Number::class]);
 $validation->setFields($_POST)->setRules(
     [
         "id" => ["required", "numara"],
+        "name" => ["string", "required"],
+        "date" => ["date", "required"],
+    ]
+)->make();
+
+$validation->getAllFields();
+```
+
+# Parametre Gönderme
+Kurala parametre atanabiliyor. Ama öncesinde ilgili kuralın `__construct` yöntemi tanımlı olmalı. Onun dışında herhangi bir eklemeye ihtiyaç duymuyor.
+```php
+$validation = new ahmetbarut\Validation\Validate();
+
+$validation->setFields($_POST)->setRules(
+    [
+        "id" => ["required",  new Max(50)],
         "name" => ["string", "required"],
         "date" => ["date", "required"],
     ]
