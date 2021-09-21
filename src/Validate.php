@@ -106,13 +106,16 @@ class Validate
 
                 // Uygulanmış olan arayüzdeki check yöntemine erişip parametreleri çalıştırır ve sonucu alır
                 // Kural false dönerse başarısız olarak işaretlenir.
-                if (!array_key_exists($key, $this->fields)) {
+
+                if (array_key_exists($key, $this->fields)) {
                     if (in_array("required", $this->rules[$key])) {
-                        array_push_key($fails, $key, $getRuleClass->message());
-                    }
-                } else if (!in_array("required", $this->rules[$key]) && !empty($this->fields[$key])) {
-                    if ($getRuleClass->check($key, $this->fields[$key]) === false) {
-                        array_push_key($fails, $key, $getRuleClass->message());
+                        if (false === $getRuleClass->check($key, $this->fields[$key])) {
+                            array_push_key($fails, $key, $getRuleClass->message());
+                        }
+                    } else /* (!in_array("required", $this->rules[$key])) */ {
+                        if (false === $getRuleClass->check($key, $this->fields[$key])) {
+                            array_push_key($fails, $key, $getRuleClass->message());
+                        }
                     }
                 }
             }

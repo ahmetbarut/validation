@@ -10,7 +10,7 @@ class Required implements Rule
     public function check($attr, $value): bool
     {
      
-        return strlen($value) !== 0 ? true : false;
+        return !empty($value);
     }
 
     public function message(): string
